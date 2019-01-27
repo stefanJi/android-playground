@@ -1,1 +1,1 @@
-include ':app', ':m_admin', ':m_webview', ':m_comm'
+include ':app', ':m_admin', ':m_webview', ':m_comm', ':m_widgets'
