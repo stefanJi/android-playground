@@ -27,14 +27,34 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 28
     applicationId = "io.github.stefanji.playground"
-    minSdkVersion = 16
-    targetSdkVersion = 28
     versionCode = 1
     versionName = "1.0"
 
-    // dep
-    supportLibVersion = '28.0.0'
+    // Sdk and tools
+    compileSdkVersion = 28
+    minSdkVersion = 16
+    targetSdkVersion = 28
+
+    // App dependencies
+    constraintLayoutVersion = '1.1.3'
+    coreTestingVersion = '2.0.0'
+    coroutinesVersion = "1.1.1"
+    espressoVersion = '3.1.0-alpha4'
+    glideVersion = '4.8.0'
+    gradleVersion = '3.3.1'
+    gsonVersion = '2.8.2'
     junitVersion = '4.12'
+    kotlinVersion = '1.3.21'
+    ktlintVersion = '0.30.0'
+    ktxVersion = '1.0.1'
+    lifecycleVersion = '2.1.0-alpha02'
+    materialVersion = '1.0.0'
+    navigationVersion = '1.0.0-rc01'
+    recyclerViewVersion = '1.1.0-alpha02'
+    roomVersion = '2.1.0-alpha04'
+    runnerVersion = '1.0.1'
+    supportLibraryVersion = '1.1.0-alpha02'
+    uiAutomatorVersion = '2.2.0'
+    workVersion = '1.0.0-rc02'
 }

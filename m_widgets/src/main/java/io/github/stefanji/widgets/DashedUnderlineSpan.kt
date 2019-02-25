@@ -4,33 +4,34 @@ import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
-import android.support.annotation.ColorInt
 import android.text.style.ReplacementSpan
+import androidx.annotation.ColorInt
 
 /**
  * <p>
  *   val str = "Underlined Text . Test Test Test Test Test Test Test Test Test Test Test Test"
  *   val content = SpannableString(str)
- *   content.setSpan(DotUnderlingSpan(10f, 5f, 5f, 2f, Color.BLUE), 0, 10, 0)
+ *   content.setSpan(DashedUnderlineSpan(10f, 2f, 5f, Color.RED, 10f), 4, 7, 0)
  *   tvName.text = content
  * </p>
  * @param dotWidth dot width
  * @param intervalWidth interval width
- * @param marginBottom underling margin bottom of text
  * @param lineHeight line block height
+ * @param lineColor line color
+ * @param marginBottom underling margin bottom of text
  */
-class DotUnderlingSpan(
+class DashedUnderlineSpan(
     private val dotWidth: Float,
     private val intervalWidth: Float,
-    private val marginBottom: Float,
     private val lineHeight: Float,
-    @ColorInt private val color: Int
+    @ColorInt private val lineColor: Int,
+    private val marginBottom: Float
 ) : ReplacementSpan() {
     private var textWidth = 0
 
     private val dotPaint: Paint = Paint().apply {
         style = Paint.Style.STROKE
-        color = color
+        color = lineColor
         strokeWidth = lineHeight
         pathEffect = DashPathEffect(floatArrayOf(dotWidth, intervalWidth), 0f)
     }
@@ -38,9 +39,7 @@ class DotUnderlingSpan(
     private val path = Path()
 
     override fun getSize(paint: Paint, text: CharSequence?, start: Int, end: Int, fm: Paint.FontMetricsInt?): Int {
-        textWidth = text?.let {
-            paint.measureText(it, start, end).toInt()
-        } ?: 0
+        textWidth = text?.let { paint.measureText(it, start, end).toInt() } ?: 0
         return textWidth
     }
 
