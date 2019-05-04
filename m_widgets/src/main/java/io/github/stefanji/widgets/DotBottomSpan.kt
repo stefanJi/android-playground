@@ -16,6 +16,7 @@ class DotBottomSpan(private val tv: TextView) : ReplacementSpan() {
     var dotInterval: Float = 5f
         set(value) {
             if (value != field) {
+                field = value
                 tv.invalidate()
             }
         }
@@ -25,6 +26,7 @@ class DotBottomSpan(private val tv: TextView) : ReplacementSpan() {
         set(value) {
             if (value != field) {
                 setupPaint()
+                field = value
                 tv.invalidate()
             }
         }
@@ -32,6 +34,7 @@ class DotBottomSpan(private val tv: TextView) : ReplacementSpan() {
     var dotRadius: Float = 5f
         set(value) {
             if (value != field) {
+                field = value
                 tv.invalidate()
             }
         }
