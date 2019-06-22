@@ -4,7 +4,7 @@
           package="io.github.stefanji.playground">
 
     <application
-            android:allowBackup="false"
+            android:name=".MApp"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".BActivity"/>
+
     </application>
 
 </manifest>

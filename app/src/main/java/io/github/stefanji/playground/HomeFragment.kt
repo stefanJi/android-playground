@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 
 
@@ -40,6 +42,16 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val colorBg = ContextCompat.getColor(requireContext(), R.color.a)
+        val colorFg = ContextCompat.getColor(requireContext(), R.color.cc_lesson_card_bg_cover2)
+        val color = ColorUtils.blendARGB(colorBg, colorFg, 0.9F)
+        view.findViewById<View>(R.id.viewBg).apply {
+            setBackgroundColor(color)
+        }
+    }
 
     companion object {
         /**

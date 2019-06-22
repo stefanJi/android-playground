@@ -57,4 +57,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+
+    implementation 'com.hbb20:ccp:2.2.9'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
 }

@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="cc_default_card_bg">#F58E2E</color>
+    <color name="cc_lesson_card_bg_cover">#E5F5F5F5</color>
+    <color name="cc_lesson_card_bg_cover2">#F5F5F5</color>
+    <color name="a">#A3D206</color>
+    <color name="b">#8658FF</color>
+    <color name="bell_comflower">#7570ff</color>
+    <color name="bell_comflower_al">#667570FF</color>
+
+
 </resources>
