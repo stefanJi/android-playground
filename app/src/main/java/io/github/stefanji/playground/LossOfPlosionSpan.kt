@@ -1,13 +1,16 @@
 package io.github.stefanji.playground
 
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Rect
 import android.text.style.ReplacementSpan
 import androidx.annotation.ColorInt
 
 /**
  * Create by jy on 2019-06-20
  */
-class HalfSpan(
+class LossOfPlosionSpan(
     @ColorInt private val leftColor: Int,
     @ColorInt private val rightColor: Int,
     @ColorInt private val lineColor: Int,
@@ -45,16 +48,19 @@ class HalfSpan(
             paint.isAntiAlias = true
 
             val cx = x + w / 2
-            val r = Rect(x.toInt(), top, cx.toInt(), bottom)
-
             val s = it.substring(start, end)
+
+            val rightRect = Rect(cx.toInt(), top, (x + w).toInt(), bottom)
+            canvas.save()
+            canvas.clipRect(rightRect)
             paint.color = leftColor
             canvas.drawText(s, x, y.toFloat(), paint)
+            canvas.restore()
 
+            val leftRect = Rect(x.toInt(), top, cx.toInt(), bottom)
             canvas.save()
-            canvas.clipRect(r)
+            canvas.clipRect(leftRect)
             paint.color = rightColor
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
             canvas.drawText(s, x, y.toFloat(), paint)
             canvas.restore()
 

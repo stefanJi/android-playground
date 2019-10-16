@@ -1,11 +1,16 @@
 package io.github.stefanji.playground
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
+import android.util.Property
 import android.widget.ProgressBar
 
 fun Int.toPxInt() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -23,7 +28,11 @@ class IntervalProgressBar @JvmOverloads constructor(
     private var mProgressDrawable: IntervalProgressDrawable? = null
 
     override fun setProgress(progress: Int) {
-        progressDrawable.progress = progress
+        progressDrawable.setProgress(progress)
+    }
+
+    override fun setProgress(progress: Int, animate: Boolean) {
+        progressDrawable.setProgress(progress, animate)
     }
 
     override fun setMax(max: Int) {
@@ -37,37 +46,49 @@ class IntervalProgressBar @JvmOverloads constructor(
         }
         return mProgressDrawable!!
     }
+
+    override fun getProgress(): Int {
+        return progressDrawable.progress
+    }
+
 }
 
 class IntervalProgressDrawable : Drawable() {
+    companion object {
+        private const val ANIMATE_DURATION = 300L
+    }
 
+    //region filed
     /**
      * 刻度数量
      */
     var max: Int = 1
         set(value) {
-            if (max < 1) {
-                throw IllegalStateException("max must >= 1")
-            }
+            check(max >= 1) { "max must >= 1" }
             if (value != field) {
                 field = value
                 invalidateSelf()
             }
         }
 
+    var progress = 0
+
     /**
      * 当前刻度
      */
-    var progress: Int = 0
-        set(value) {
-            if (value != field) {
-                if (progress < 0 || progress > max) {
-                    throw IllegalStateException("progress must <= max and > 0")
-                }
-                field = value
+    fun setProgress(progress: Int, animate: Boolean = false) {
+        check(!(progress < 0 || progress > max)) { "progress must <= max and > 0" }
+        this.progress = progress
+        this.isAnimate = animate
+        if (animate) {
+            if (!bounds.isEmpty) {
+                onBoundsChange(bounds)
+            }else{
                 invalidateSelf()
             }
         }
+        invalidateSelf()
+    }
 
     /**
      * 刻度高亮色
@@ -135,8 +156,13 @@ class IntervalProgressDrawable : Drawable() {
             }
         }
 
+    var animateDuration = ANIMATE_DURATION
+
     private var progressWidth = 0f
     private var widgetHeight = 0
+    private var isAnimate = false
+    private var animateWidth = 0f
+    //endregion
 
     private val paint = Paint().apply {
         style = Paint.Style.FILL
@@ -148,13 +174,33 @@ class IntervalProgressDrawable : Drawable() {
         super.onBoundsChange(bounds)
         widgetHeight = bounds.height()
         progressWidth = (bounds.width() - intervalWidth * (max - 1)) / max
+        Log.d("TAG", "onBoundsChange $progressWidth")
+
+        val start = if (progress == 1 || progress == max) radius else 0f
+        ObjectAnimator.ofFloat(this, animateProperty, start, progressWidth)
+            .setDuration(animateDuration)
+            .apply {
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        isAnimate = false
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                        isAnimate = false
+                    }
+                })
+            }.start()
     }
 
     override fun draw(canvas: Canvas) {
+        Log.d("TAG", "draw")
+        drawBackground(canvas)
+        drawProgress(canvas)
+    }
+
+    private fun drawBackground(canvas: Canvas) {
         repeat(max) {
             val dx = (progressWidth + intervalWidth) * it
-            val inProgress = it < progress
-            val isHighlightRule = it < progress - 1
             val drawLeftRound = it == 0 && radius > 0
             val drawRightRound = it == max - 1 && radius > 0
             val isLastRule = it == max - 1
@@ -162,22 +208,22 @@ class IntervalProgressDrawable : Drawable() {
             canvas.save()
             canvas.translate(dx, 0f)
 
-            paint.color = if (inProgress) highLightColor else defaultColor
+            paint.color = defaultColor
 
             val rect = RectF(0f, 0f, progressWidth, widgetHeight.toFloat())
 
             if (drawLeftRound) {
-                drawLeftRound(canvas, rect)
+                drawLeftRound(canvas, rect, progressWidth)
             }
 
             if (drawRightRound) {
-                drawRightRound(canvas, rect)
+                drawRightRound(canvas, rect, progressWidth)
             }
 
             canvas.drawRect(rect, paint)
 
-            paint.color = if (isHighlightRule) intervalHighLightColor else intervalColor
-            if (!isLastRule && paint.color != Color.TRANSPARENT) {
+            paint.color = intervalColor
+            if (!isLastRule) {
                 canvas.drawRect(
                     progressWidth,
                     0f,
@@ -191,14 +237,89 @@ class IntervalProgressDrawable : Drawable() {
         }
     }
 
-    private fun drawLeftRound(canvas: Canvas, rectF: RectF) {
-        val r = RectF(radius, 0f, progressWidth, widgetHeight.toFloat())
+    private fun drawProgress(canvas: Canvas) {
+        val p = if (isAnimate) (if (progress == 0) 0 else progress - 1) else progress
+        repeat(p) {
+            val dx = (progressWidth + intervalWidth) * it
+            val drawLastInterval = it < progress - 1
+            val drawLeftRound = it == 0 && radius > 0
+            val drawRightRound = it == max - 1 && radius > 0
+            val isLastRule = it == max - 1
+
+            canvas.save()
+            canvas.translate(dx, 0f)
+
+            paint.color = highLightColor
+
+            val rect = RectF(0f, 0f, progressWidth, widgetHeight.toFloat())
+
+            if (drawLeftRound) {
+                drawLeftRound(canvas, rect, progressWidth)
+            }
+
+            if (drawRightRound) {
+                drawRightRound(canvas, rect, progressWidth)
+            }
+
+            canvas.drawRect(rect, paint)
+
+            paint.color = intervalHighLightColor
+            if (drawLastInterval && !isLastRule) {
+                canvas.drawRect(
+                    progressWidth,
+                    0f,
+                    progressWidth + intervalWidth,
+                    widgetHeight.toFloat(),
+                    paint
+                )
+            }
+
+            canvas.restore()
+        }
+
+        if (isAnimate) {
+            drawLastProgressBlock(canvas)
+        }
+    }
+
+    private fun drawLastProgressBlock(canvas: Canvas) {
+        val dx = (progressWidth + intervalWidth) * (progress - 1)
+        val drawLeftRound = progress == 1 && radius > 0
+        val drawRightRound = progress == max && radius > 0
+        paint.color = highLightColor
+
+        canvas.save()
+        canvas.translate(dx, 0f)
+
+        val rect = RectF(0f, 0f, animateWidth, widgetHeight.toFloat())
+
+        if (drawLeftRound) {
+            drawLeftRound(canvas, rect, animateWidth)
+        }
+
+        if (drawRightRound) {
+            drawRightRound(canvas, rect, animateWidth)
+        }
+
+        if (drawLeftRound) {
+            if (animateWidth >= radius) {
+                canvas.drawRect(rect, paint)
+            }
+        } else {
+            canvas.drawRect(rect, paint)
+        }
+
+        canvas.restore()
+    }
+
+    private fun drawLeftRound(canvas: Canvas, rectF: RectF, blockWidth: Float) {
+        val r = RectF(radius, 0f, blockWidth, widgetHeight.toFloat())
         drawRadius(canvas, r, rectF)
         rectF.left += radius
     }
 
-    private fun drawRightRound(canvas: Canvas, rectF: RectF) {
-        val r = RectF(0f, 0f, progressWidth - radius, widgetHeight.toFloat())
+    private fun drawRightRound(canvas: Canvas, rectF: RectF, blockWidth: Float) {
+        val r = RectF(0f, 0f, blockWidth - radius, widgetHeight.toFloat())
         drawRadius(canvas, r, rectF)
         rectF.right -= radius
     }
@@ -221,5 +342,16 @@ class IntervalProgressDrawable : Drawable() {
 
     override fun setColorFilter(colorFilter: ColorFilter) {
         paint.colorFilter = colorFilter
+    }
+
+    private val animateProperty by lazy(LazyThreadSafetyMode.NONE) {
+        object : Property<IntervalProgressDrawable, Float>(Float::class.java, "AnimateWidth") {
+            override fun get(obj: IntervalProgressDrawable): Float = obj.animateWidth
+
+            override fun set(obj: IntervalProgressDrawable, value: Float) {
+                obj.animateWidth = value
+                obj.invalidateSelf()
+            }
+        }
     }
 }

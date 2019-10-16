@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!--
+        <com.otaliastudios.cameraview.CameraView
+                android:id="@+id/cameraView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cameraAudio="off"
+                app:cameraEngine="camera2"
+                app:cameraExperimental="true"
+                app:cameraFacing="front"
+                app:cameraFlash="off"
+                app:cameraMode="video"
+                app:cameraPlaySounds="false"
+                app:cameraPreview="glSurface" />
+    -->
+    <TextureView
+            android:id="@+id/suf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <TextView
+            android:id="@+id/tv_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#50000000"
+            android:textColor="#eee"
+            tools:text="fps:20" />
+
+    <Switch
+            android:id="@+id/switch_beauty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="#50000000"
+            android:padding="10dp"
+            android:text="美颜"
+            android:textColor="#eee" />
+
+</FrameLayout>

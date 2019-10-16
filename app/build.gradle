@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -14,9 +18,23 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
+            useProguard true
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -32,9 +50,6 @@ dependencies {
     implementation project(path: ":m_webview")
     implementation project(path: ":m_widgets")
 
-    implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "android.arch.work:work-runtime-ktx:$rootProject.workVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
@@ -48,6 +63,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "com.otaliastudios:cameraview:2.3.0"
 
     // Testing dependencies
     implementation 'com.android.support:support-v4:28.0.0'
@@ -60,5 +76,10 @@ dependencies {
 
     implementation 'com.hbb20:ccp:2.2.9'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+
+//    implementation "com.android.tools.build:gradle:3.3.0"
 }

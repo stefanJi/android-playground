@@ -4,8 +4,7 @@
     <application>
         <activity
                 android:name=".AdminActivity"
-                android:launchMode="singleTask"
-                android:label="${app_name}">
+                android:launchMode="singleTask">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>
