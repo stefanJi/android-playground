@@ -1,4 +1,4 @@
-package io.github.stefanji.playground
+package io.github.stefanji.playground.widget
 
 import android.opengl.GLES20
 import android.util.Log
@@ -29,8 +29,12 @@ class BeautyFilter(private val factor: Float = 0.9f) : BaseFilter() {
 
     override fun onCreate(programHandle: Int) {
         super.onCreate(programHandle)
-        mSizeLocation = GLES20.glGetUniformLocation(programHandle, SIZE_LOCATION)
-        mFactorLocation = GLES20.glGetUniformLocation(programHandle, FACTOR_LOCATION)
+        mSizeLocation = GLES20.glGetUniformLocation(programHandle,
+            SIZE_LOCATION
+        )
+        mFactorLocation = GLES20.glGetUniformLocation(programHandle,
+            FACTOR_LOCATION
+        )
     }
 
     override fun onPreDraw(timestampUs: Long, transformMatrix: FloatArray?) {

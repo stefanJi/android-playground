@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.tencent.matrix:matrix-gradle-plugin:$MATRIX_VERSION"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -35,7 +36,7 @@ ext {
 
     // Sdk and tools
     compileSdkVersion = 28
-    minSdkVersion = 16
+    minSdkVersion = 19
     targetSdkVersion = 28
 
     // App dependencies

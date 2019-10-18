@@ -1,4 +1,4 @@
-package io.github.stefanji.playground
+package io.github.stefanji.playground.widget
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

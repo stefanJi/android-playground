@@ -5,24 +5,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!--
-        <com.otaliastudios.cameraview.CameraView
-                android:id="@+id/cameraView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cameraAudio="off"
-                app:cameraEngine="camera2"
-                app:cameraExperimental="true"
-                app:cameraFacing="front"
-                app:cameraFlash="off"
-                app:cameraMode="video"
-                app:cameraPlaySounds="false"
-                app:cameraPreview="glSurface" />
-    -->
-    <TextureView
-            android:id="@+id/suf"
+    <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/cameraView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:cameraAudio="off"
+            app:cameraEngine="camera2"
+            app:cameraExperimental="true"
+            app:cameraFacing="front"
+            app:cameraFlash="off"
+            app:cameraMode="video"
+            app:cameraPlaySounds="false"
+            app:cameraPreview="glSurface" />
 
     <TextView
             android:id="@+id/tv_fps"

@@ -1,4 +1,4 @@
-package io.github.stefanji.playground
+package io.github.stefanji.playground.widget
 
 import android.graphics.Canvas
 import android.graphics.DashPathEffect

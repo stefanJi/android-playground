@@ -81,5 +81,22 @@ dependencies {
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 
+    implementation "com.tencent.matrix:matrix-android-lib:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-android-commons:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-trace-canary:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-resource-canary-android:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-resource-canary-common:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-sqlite-lint-android-sdk:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-io-canary:$MATRIX_VERSION"
+
 //    implementation "com.android.tools.build:gradle:3.3.0"
+}
+
+apply plugin: 'com.tencent.matrix-plugin'
+matrix {
+    trace {
+        enable = true    //if you don't want to use trace canary, set false
+        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
+        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
+    }
 }

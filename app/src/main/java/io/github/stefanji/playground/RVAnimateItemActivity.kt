@@ -1,6 +1,5 @@
 package io.github.stefanji.playground
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,26 +10,27 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_1.*
-import kotlinx.android.synthetic.main.activity_1.recyclerListTest
-import kotlinx.android.synthetic.main.innrer_scroll_test.*
-import java.util.*
+import io.github.stefanji.playground.widget.ScaleItemAnimator
+import kotlinx.android.synthetic.main.activity_rv_animation.*
 
 
 private const val TAG = "Main"
 
-class MainActivity : AppCompatActivity() {
+class RVAnimateItemActivity : AppCompatActivity() {
 
-    lateinit var testAdapter: TestAdapter
+    private lateinit var testAdapter: TestAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.innrer_scroll_test)
+        setContentView(R.layout.activity_rv_animation)
 
         testAdapter = TestAdapter()
 
         recyclerListTest.adapter = testAdapter
         recyclerListTest.layoutManager = LinearLayoutManager(this)
+        recyclerListTest.itemAnimator = ScaleItemAnimator().apply {
+            moveDuration = 400
+        }
 
         testAdapter.data = arrayListOf(
             ItemData("a"),
@@ -38,14 +38,9 @@ class MainActivity : AppCompatActivity() {
             ItemData("c"),
             ItemData("d"),
             ItemData("e"),
-            ItemData("f"),
-            ItemData("g")
+            ItemData("f")
         )
-
-        insertBtn.setOnClickListener {
-            testAdapter.data.add(0, ItemData("${Random().nextInt()}"))
-            testAdapter.notifyItemInserted(0)
-        }
+        setActions()
     }
 
     private fun setActions() {
@@ -61,21 +56,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupProgressBar() {
-        progressBar.max = 3
-        progressBar.progressDrawable.apply {
-            highLightColor = Color.GREEN
-            defaultColor = Color.GRAY
-            intervalColor = Color.BLACK
-            intervalHighLightColor = Color.MAGENTA
-        }
-        btnIncreProgress.setOnClickListener {
-            progressBar.setProgress(progressBar.progress + 1, true)
-        }
-        btnDeProgress.setOnClickListener {
-            progressBar.setProgress(progressBar.progress - 1)
-        }
-    }
 }
 
 class TestAdapter : RecyclerView.Adapter<TestAdapter.Holder>() {
