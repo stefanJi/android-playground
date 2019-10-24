@@ -1,5 +1,6 @@
 package io.github.stefanji.playground
 
+import android.Manifest
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Intent
@@ -10,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_entrance.*
@@ -22,6 +25,7 @@ class EntranceActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrance)
+        requestPermission()
 
         rv_entrance.layoutManager = LinearLayoutManager(this)
         rv_entrance.adapter = Adapter(generateEntrance())
@@ -35,6 +39,18 @@ class EntranceActivity : Activity() {
             .activities.asSequence()
             .filter { it.name != className }
             .map { it.name }.toList()
+    }
+
+    private fun requestPermission() {
+        val permissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.INSTALL_PACKAGES
+        ).filter { ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED }.toTypedArray()
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissions, 500)
+        }
     }
 }
 

@@ -30,6 +30,7 @@
         <activity android:name=".CameraActivity" />
         <activity android:name=".IOTestActivity" />
         <activity android:name=".RVAnimateItemActivity" />
+        <activity android:name=".DexLoaderActivity" />
 
     </application>
 
