@@ -31,6 +31,9 @@
         <activity android:name=".IOTestActivity" />
         <activity android:name=".RVAnimateItemActivity" />
         <activity android:name=".DexLoaderActivity" />
+        <activity android:name=".DrawableTestActivity" />
+        <activity android:name=".ListViewActivity" />
+        <activity android:name=".LeakTestActivity" />
 
     </application>
 

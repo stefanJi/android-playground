@@ -32,14 +32,10 @@ class RVAnimateItemActivity : AppCompatActivity() {
             moveDuration = 400
         }
 
-        testAdapter.data = arrayListOf(
-            ItemData("a"),
-            ItemData("b"),
-            ItemData("c"),
-            ItemData("d"),
-            ItemData("e"),
-            ItemData("f")
-        )
+        testAdapter.data = mutableListOf()
+        repeat(15) {
+            testAdapter.data.add(ItemData("$it"))
+        }
         setActions()
     }
 
