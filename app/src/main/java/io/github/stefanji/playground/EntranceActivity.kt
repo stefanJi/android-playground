@@ -31,14 +31,17 @@ class EntranceActivity : Activity() {
         rv_entrance.adapter = Adapter(generateEntrance())
     }
 
-    private fun generateEntrance(): List<String> {
+    private fun generateEntrance(): List<ActivityItem> {
         val packageName = this.packageName
         val className = this.componentName.className
         Log.d("TAG123", "$packageName $className")
         return packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
             .activities.asSequence()
             .filter { it.name != className }
-            .map { it.name }.toList()
+            .filter { it.name.contains(packageName) }
+            .map {
+                ActivityItem(it.name.split(".").last(), it.name)
+            }.toList()
     }
 
     private fun requestPermission() {
@@ -54,11 +57,11 @@ class EntranceActivity : Activity() {
     }
 }
 
-class Adapter(initData: List<String> = emptyList()) : RecyclerView.Adapter<EntranceHolder>() {
+class Adapter(initData: List<ActivityItem> = emptyList()) : RecyclerView.Adapter<EntranceHolder>() {
 
     private val entrances = initData.toMutableList()
 
-    fun updateData(entrancese: List<String>) {
+    fun updateData(entrancese: List<ActivityItem>) {
         this.entrances.clear()
         this.entrances.addAll(entrancese)
         notifyDataSetChanged()
@@ -73,15 +76,17 @@ class Adapter(initData: List<String> = emptyList()) : RecyclerView.Adapter<Entra
 }
 
 class EntranceHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(clazz: String) {
+    fun bind(item: ActivityItem) {
         if (itemView is Button) {
-            itemView.text = clazz
+            itemView.text = item.name
         }
 
         itemView.setOnClickListener {
             val intent = Intent()
-            intent.component = ComponentName(itemView.context.packageName, clazz)
+            intent.component = ComponentName(itemView.context.packageName, item.className)
             itemView.context.startActivity(intent)
         }
     }
 }
+
+data class ActivityItem(val name: String, val className: String)

@@ -37,16 +37,16 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            applicationIdSuffix ".debug"
-        }
+//        debug {
+//            applicationIdSuffix ".debug"
+//        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(path: ":m_admin")
+//    implementation project(path: ":m_admin")
     implementation project(path: ":m_webview")
     implementation project(path: ":m_widgets")
 

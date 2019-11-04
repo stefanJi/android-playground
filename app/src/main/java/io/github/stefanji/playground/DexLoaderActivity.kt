@@ -49,10 +49,10 @@ class DexLoaderActivity : Activity() {
             ops.close()
         }
         val pathDexLoader = MClassLoader(file.absolutePath, null, classLoader)
-        val clsz = pathDexLoader.loadClass("io.github.stefanji.fluttergitlab.MainActivity")
+        val clazz = pathDexLoader.loadClass("io.github.stefanji.fluttergitlab.MainActivity")
         Log.d(TAG, "Other Apk Loaded")
-        Log.d(TAG, clsz.toString())
-        Log.d(TAG, clsz.classLoader?.toString())
+        Log.d(TAG, clazz.toString())
+        Log.d(TAG, clazz.classLoader?.toString())
     }
 
     companion object {
