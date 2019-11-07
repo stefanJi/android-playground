@@ -36,6 +36,7 @@
         <activity android:name=".LeakTestActivity" />
         <activity android:name=".HotFixDexActivity" />
         <activity android:name=".EventTestActivity" />
+        <activity android:name=".ViewDrawActivity" />
 
     </application>
 

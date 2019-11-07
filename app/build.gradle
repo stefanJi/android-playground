@@ -17,6 +17,13 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+        }
     }
 
     signingConfigs {
@@ -40,6 +47,19 @@ android {
 //        debug {
 //            applicationIdSuffix ".debug"
 //        }
+    }
+
+    sourceSets.main {
+        jni.srcDir "src/main/cpp"
+    }
+
+    externalNativeBuild {
+
+        // Encapsulates your CMake build configurations.
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "src/main/cpp/CMakeLists.txt"
+        }
     }
 }
 
