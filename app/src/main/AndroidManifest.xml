@@ -37,6 +37,8 @@
         <activity android:name=".HotFixDexActivity" />
         <activity android:name=".EventTestActivity" />
         <activity android:name=".ViewDrawActivity" />
+        <activity android:name=".transition_animation.TransitionEnterActivity" />
+        <activity android:name=".transition_animation.TransitionEnteredActivity" />
 
     </application>
 
