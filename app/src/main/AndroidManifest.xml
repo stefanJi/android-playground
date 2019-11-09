@@ -39,6 +39,7 @@
         <activity android:name=".ViewDrawActivity" />
         <activity android:name=".transition_animation.TransitionEnterActivity" />
         <activity android:name=".transition_animation.TransitionEnteredActivity" />
+        <activity android:name=".FragmentsActivity" />
 
     </application>
 
