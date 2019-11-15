@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
             android:name=".MApp"
@@ -40,6 +41,8 @@
         <activity android:name=".transition_animation.TransitionEnterActivity" />
         <activity android:name=".transition_animation.TransitionEnteredActivity" />
         <activity android:name=".FragmentsActivity" />
+        <activity android:name=".ThreadPoolTestActivity" />
+        <activity android:name=".AudioRecorderActivity" />
 
     </application>
 

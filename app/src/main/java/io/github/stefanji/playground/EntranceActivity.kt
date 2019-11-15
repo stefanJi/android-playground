@@ -49,7 +49,8 @@ class EntranceActivity : Activity() {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA,
-            Manifest.permission.INSTALL_PACKAGES
+            Manifest.permission.INSTALL_PACKAGES,
+            Manifest.permission.RECORD_AUDIO
         ).filter { ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED }.toTypedArray()
         if (permissions.isNotEmpty()) {
             ActivityCompat.requestPermissions(this, permissions, 500)

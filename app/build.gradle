@@ -108,6 +108,7 @@ dependencies {
     implementation "com.tencent.matrix:matrix-resource-canary-common:$MATRIX_VERSION"
     implementation "com.tencent.matrix:matrix-sqlite-lint-android-sdk:$MATRIX_VERSION"
     implementation "com.tencent.matrix:matrix-io-canary:$MATRIX_VERSION"
+    implementation "com.github.lingochamp:LingoRecorder:$lingoRecorderVersion"
 
 //    implementation "com.android.tools.build:gradle:3.3.0"
 }
