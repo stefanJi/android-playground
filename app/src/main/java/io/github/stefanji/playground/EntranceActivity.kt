@@ -2,7 +2,9 @@ package io.github.stefanji.playground
 
 import android.Manifest
 import android.app.Activity
+import android.app.Fragment
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -20,10 +22,13 @@ import kotlinx.android.synthetic.main.activity_entrance.*
 /**
  * Create by jy on 2019-10-18
  */
+private const val TAG = "EntranceActivity"
+
 class EntranceActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "[onCreate]")
         setContentView(R.layout.activity_entrance)
         requestPermission()
 
@@ -55,6 +60,26 @@ class EntranceActivity : Activity() {
         if (permissions.isNotEmpty()) {
             ActivityCompat.requestPermissions(this, permissions, 500)
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        Log.d(TAG, "[onAttachedToWindow]")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "[onResume]")
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        Log.d(TAG, "[attachBaseContext]")
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) {
+        super.onAttachFragment(fragment)
+        Log.d(TAG, "[onAttachFragment]")
     }
 }
 

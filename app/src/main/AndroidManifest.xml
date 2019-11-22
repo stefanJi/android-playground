@@ -43,7 +43,9 @@
         <activity android:name=".FragmentsActivity" />
         <activity android:name=".ThreadPoolTestActivity" />
         <activity android:name=".AudioRecorderActivity" />
-
+        <activity android:name=".ServiceAActivity" />
+        <activity android:name=".ServiceBActivity" />
+        <service android:name=".RemoteService" />
     </application>
 
 </manifest>
