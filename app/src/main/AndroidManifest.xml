@@ -45,6 +45,9 @@
         <activity android:name=".AudioRecorderActivity" />
         <activity android:name=".ServiceAActivity" />
         <activity android:name=".ServiceBActivity" />
+        <activity android:name=".ExceptionTest" />
+        <activity android:name=".TextViewBreakLineActivity" />
+
         <service android:name=".RemoteService" />
     </application>
 
