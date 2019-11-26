@@ -9,4 +9,5 @@ public class TestJNIRegiester {
         System.loadLibrary("jni_test_lib");
     }
     public native void hello();
+    public native void hello2();
 }

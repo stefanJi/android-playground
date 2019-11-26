@@ -34,6 +34,8 @@ class EntranceActivity : Activity() {
 
         rv_entrance.layoutManager = LinearLayoutManager(this)
         rv_entrance.adapter = Adapter(generateEntrance())
+
+        TestJNIRegiester().hello()
     }
 
     private fun generateEntrance(): List<ActivityItem> {

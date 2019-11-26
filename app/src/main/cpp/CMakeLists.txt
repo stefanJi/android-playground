@@ -7,4 +7,8 @@ add_library( # Specifies the name of the library.
                  # Provides a relative path to your source file(s).
                  test_jni_register.cpp )
 
+find_library(log-lib log)
+
 include_directories(src/main/cpp)
+
+target_link_libraries(jni_test_lib ${log-lib})

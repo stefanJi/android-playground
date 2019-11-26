@@ -3,23 +3,33 @@
 //
 
 #include <jni.h>
-#include "io_github_stefanji_playground_TestJNIRegiester.h"
+#include "size.h"
+#include "log.h"
+#include <iostream>
+#include <array>
 
-//extern "C" JNIEXPORT void JNICALL Java_io_github_stefanji_playground_TestJNIRegiester_hello
-//        (JNIEnv *, jobject) {
-//
-//}
-
-//typedef struct {
-//    const char* name;
-//    const char* signature;
-//    void*       fnPtr;
-//} JNINativeMethod;
-
+#ifdef __cplusplus
 extern "C" {
+#endif
+
+static const char *TAG = "JNI_TEST";
+
+template<typename T, size_t N>
+void printArray(const T(&a)[N]) {
+    std::cout << "[";
+    const char *seq = "";
+    for (int i = 0; i < N; ++i, seq = ",") {
+        std::cout << seq << a[i];
+    }
+    std::cout << "]" << std::endl;
+}
 
 void mainabc() {
-
+    LOG_D(TAG, "first line");
+    LOG_W(TAG, "line %d", 2);
+    LOG_E(TAG, "line %d", 3);
+    LOG_I(TAG, "line %d", 4);
+    LOG_V(TAG, "line %d", 5);
 }
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
@@ -30,14 +40,20 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         return result;
     }
 
-    JNINativeMethod jniNativeMethod{
-            "hello", "()V", (void *)mainabc
+    static const JNINativeMethod methods[] = {
+        {
+            .name = "hello",
+            .signature="()V",
+            .fnPtr = reinterpret_cast<void *>(&mainabc)
+        }
     };
-
-    env->RegisterNatives(env->FindClass("io.github.stefanji.playground.TestJNIRegiester"), &jniNativeMethod, 1);
+    printArray(methods);
+    env->RegisterNatives(env->FindClass("io/github/stefanji/playground/TestJNIRegiester"), methods,
+                         jni_util::size(methods));
     // 返回jni的版本
     return JNI_VERSION_1_4;
 }
 
-
-}
+#ifdef __cplusplus
+} //end extern "C"
+#endif

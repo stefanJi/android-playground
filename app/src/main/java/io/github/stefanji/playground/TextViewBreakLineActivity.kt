@@ -13,7 +13,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.ScrollView
 import android.widget.TextView
 import io.github.stefanji.playground.spans.LossOfPlosionSpan
 import io.github.stefanji.playground.widget.toPx
