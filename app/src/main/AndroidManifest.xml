@@ -47,6 +47,9 @@
         <activity android:name=".ServiceBActivity" />
         <activity android:name=".ExceptionTest" />
         <activity android:name=".TextViewBreakLineActivity" />
+        <activity
+                android:name=".TransparentActivity"
+                android:theme="@style/Transparent" />
 
         <service android:name=".RemoteService" />
     </application>

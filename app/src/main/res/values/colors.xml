@@ -10,6 +10,7 @@
     <color name="b">#8658FF</color>
     <color name="bell_comflower">#7570ff</color>
     <color name="bell_comflower_al">#667570FF</color>
+    <color name="transparent_60">#99000000</color>
 
 
 </resources>

@@ -14,16 +14,6 @@ extern "C" {
 
 static const char *TAG = "JNI_TEST";
 
-template<typename T, size_t N>
-void printArray(const T(&a)[N]) {
-    std::cout << "[";
-    const char *seq = "";
-    for (int i = 0; i < N; ++i, seq = ",") {
-        std::cout << seq << a[i];
-    }
-    std::cout << "]" << std::endl;
-}
-
 void mainabc() {
     LOG_D(TAG, "first line");
     LOG_W(TAG, "line %d", 2);
@@ -47,7 +37,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
             .fnPtr = reinterpret_cast<void *>(&mainabc)
         }
     };
-    printArray(methods);
     env->RegisterNatives(env->FindClass("io/github/stefanji/playground/TestJNIRegiester"), methods,
                          jni_util::size(methods));
     // 返回jni的版本

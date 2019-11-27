@@ -2,6 +2,7 @@
 // Created by JiYang on 2019-11-26.
 //
 #include <jni.h>
+#include <iostream>
 
 #ifndef ANDROID_PLAYGROUND_SIZE_H
 #define ANDROID_PLAYGROUND_SIZE_H
@@ -13,7 +14,6 @@ namespace jni_util {
     constexpr size_t size(T (&array)[N]) {
         return N;
     }
-}
 // template<typename T, size_t N> 定义模板, N 会存储数组的size, 其值等于: sizeof(array)/sizeof(array[0])
 
 // constexpr 修饰的函数，简单的来说，如果其传入的参数可以在编译时期计算出来，
@@ -24,3 +24,5 @@ namespace jni_util {
 // 类似这样: std::array<int, jni_util::size(methods)> arr;
 // 这样的话，即可检测你所写的函数是否真的产生编译期常值了。
 // 作者：蓝色 链接：https://www.zhihu.com/question/35614219/answer/63798713
+
+}
