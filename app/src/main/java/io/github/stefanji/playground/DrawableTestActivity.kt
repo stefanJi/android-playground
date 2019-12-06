@@ -3,6 +3,7 @@ package io.github.stefanji.playground
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_drawable_test.*
@@ -18,12 +19,20 @@ class DrawableTestActivity : Activity() {
 
         var set = false
         load.setOnClickListener {
-            set = if (set) {
-                iv.setBackgroundResource(0)
-                false
-            } else {
-                iv.setBackgroundResource(R.drawable.bell_loading)
-                true
+            iv.setImageDrawable(null)
+            val bmp =
+                BitmapFactory.decodeResource(resources, R.drawable.bg_level_up_n_alpha, BitmapFactory.Options().apply {
+                    this.inPreferredConfig =
+                        Bitmap.Config.RGB_565 /* 只有当图片中没有 alpha 通道时有作用, 否则 SDK 内部还是会用 ARGB_8888 加载 */
+                })
+            log("加载不带 alpha 通道的同一张图, 但是由于不带 alpha 通道了, 图片的圆角就会被默认白色填充. 可以利用 BitmapShader 做圆角效果")
+            iv.setImageDrawable(BitmapDrawable(resources, bmp))
+            iv.post {
+                val drawable = iv.drawable as? BitmapDrawable
+                drawable?.let {
+                    log("ImageView 加载的 bitmap: ${it.bitmap.toStr()}")
+                    log("ImageView 尺寸: ${iv.width} x ${iv.height}")
+                }
             }
         }
 
@@ -53,13 +62,16 @@ class DrawableTestActivity : Activity() {
         iv.background = BitmapDrawable(resources, bitmap3).apply {
             gravity = Gravity.CENTER
         }
+        */
+
         iv.post {
-            val drawable = iv.background as? BitmapDrawable
+            log("加载带 alpha 通道的图")
+            val drawable = iv.drawable as? BitmapDrawable
             drawable?.let {
-                log("iv bitmap: ${it.bitmap.toStr()}")
-                log("iv size: ${iv.width} x ${iv.height}")
+                log("ImageView 加载的 bitmap: ${it.bitmap.toStr()}")
+                log("ImageView 尺寸: ${iv.width} x ${iv.height}")
             }
-        }*/
+        }
     }
 
     private fun log(msg: String) {
@@ -80,7 +92,5 @@ fun Bitmap.Config.size() = when (this) {
     Bitmap.Config.RGB_565 -> 2
     Bitmap.Config.ARGB_4444 -> 2
     Bitmap.Config.ALPHA_8 -> 1
-//    Bitmap.Config.HARDWARE -> 0
-//    Bitmap.Config.RGBA_F16 -> 0
     else -> 0
 }

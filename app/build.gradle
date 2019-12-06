@@ -110,6 +110,9 @@ dependencies {
     implementation "com.tencent.matrix:matrix-io-canary:$MATRIX_VERSION"
     implementation "com.github.lingochamp:LingoRecorder:$lingoRecorderVersion"
 
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
 //    implementation "com.android.tools.build:gradle:3.3.0"
 }
 

@@ -50,6 +50,7 @@
         <activity
                 android:name=".TransparentActivity"
                 android:theme="@style/Transparent" />
+        <activity android:name=".BackpresureActivity" />
 
         <service android:name=".RemoteService" />
     </application>

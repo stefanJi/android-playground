@@ -7,6 +7,8 @@
 #include "log.h"
 #include <iostream>
 #include <array>
+#include <locale>
+#include <exception>
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,13 +22,19 @@ void mainabc() {
     LOG_E(TAG, "line %d", 3);
     LOG_I(TAG, "line %d", 4);
     LOG_V(TAG, "line %d", 5);
+    try {
+        std::locale::global(std::locale("ko"));
+    } catch (std::exception &e) {
+        LOG_E(TAG, "Error: %s", e.what());
+    }
 }
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+    LOG_D(TAG, "OnLoad");
     JNIEnv *env = NULL;
     jint result = -1;
 
-    if ((vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK)) {
+    if ((vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_4) != JNI_OK)) {
         return result;
     }
 
