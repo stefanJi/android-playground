@@ -33,6 +33,7 @@ class EventTestActivity : Activity() {
 
         val childs = mutableListOf<View>()
 
+        //region btn children
         repeat(2) {
             Child(this, null, 0)
                 .apply {
@@ -41,7 +42,9 @@ class EventTestActivity : Activity() {
                     setBackgroundColor(Color.RED)
                 }.let(childs::add)
         }
+        //endregion
 
+        //region listView
         val listView = MListView(this, null, 0)
         listView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
 
@@ -52,8 +55,9 @@ class EventTestActivity : Activity() {
             )
         listView.setBackgroundColor(Color.BLUE)
         childs.add(listView)
+        //endregion
 
-        parent.adapter = MPageAdapter(childs)
+        parent.adapter = MViewPage.MPageAdapter(childs)
 
         content.addView(parent)
     }
@@ -110,7 +114,7 @@ class MViewPage(context: Context, attrs: AttributeSet?) : ViewPager(context, att
                 val dy = ev.y - ly
                 lx = ev.x
                 ly = ev.y
-
+                // 如果是水平方向的移动就 return true 拦截事件
                 return abs(dx) > abs(dy)
             }
             else -> {
@@ -130,21 +134,21 @@ class MViewPage(context: Context, attrs: AttributeSet?) : ViewPager(context, att
         Log.d("tag123", "ViewPager onTouchEvent ${ev.action.actionName()}")
         return super.onTouchEvent(ev)
     }
-}
 
-class MPageAdapter(private val data: List<View>) : PagerAdapter() {
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view == obj
-    }
+    class MPageAdapter(private val data: List<View>) : PagerAdapter() {
+        override fun isViewFromObject(view: View, obj: Any): Boolean {
+            return view == obj
+        }
 
-    override fun getCount(): Int = data.size
+        override fun getCount(): Int = data.size
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        return data[position].apply { container.addView(data[position]) }
-    }
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            return data[position].apply { container.addView(data[position]) }
+        }
 
-    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
-        container.removeView(obj as View)
+        override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+            container.removeView(obj as View)
+        }
     }
 }
 
@@ -165,3 +169,4 @@ class MListView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : Li
         return super.onTouchEvent(ev)
     }
 }
+
