@@ -97,10 +97,8 @@ dependencies {
 
     implementation 'com.hbb20:ccp:2.2.9'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    // Optional, if you use support library fragments:
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+
 //
 //    implementation "com.tencent.matrix:matrix-android-lib:$MATRIX_VERSION"
 //    implementation "com.tencent.matrix:matrix-android-commons:$MATRIX_VERSION"

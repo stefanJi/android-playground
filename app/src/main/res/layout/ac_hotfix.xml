@@ -6,27 +6,20 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-    <Space
-            android:layout_width="wrap_content"
-            android:layout_height="20dp" />
-
     <TextView
-            android:id="@+id/tv_target"
+            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#000"
-            android:padding="5dp"
-            android:textColor="#fff"
-            tools:text="target" />
+            android:textSize="26sp"
+            tools:text="hello" />
 
     <Space
             android:layout_width="wrap_content"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
 
     <Button
-            android:id="@+id/btn_apply_fix"
+            android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="apply" />
-
+            android:text="Apply hot fix" />
 </LinearLayout>

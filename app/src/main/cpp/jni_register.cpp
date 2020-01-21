@@ -3,18 +3,21 @@
 //
 
 #include <jni.h>
-#include "size.h"
-#include "log.h"
+#include "include/size.h"
+#include "include/log.h"
 #include <iostream>
 #include <array>
 #include <locale>
 #include <exception>
+#include "include/hotfix.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 static const char *TAG = "JNI_TEST";
+static JNIEnv *g_env;
+static jclass g_class;
 
 void mainabc() {
     LOG_D(TAG, "first line");
@@ -22,11 +25,6 @@ void mainabc() {
     LOG_E(TAG, "line %d", 3);
     LOG_I(TAG, "line %d", 4);
     LOG_V(TAG, "line %d", 5);
-    try {
-        std::locale::global(std::locale("ko"));
-    } catch (std::exception &e) {
-        LOG_E(TAG, "Error: %s", e.what());
-    }
 }
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
@@ -37,16 +35,27 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     if ((vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_4) != JNI_OK)) {
         return result;
     }
-
+    g_env = env;
     static const JNINativeMethod methods[] = {
         {
             .name = "hello",
             .signature="()V",
             .fnPtr = reinterpret_cast<void *>(&mainabc)
+        },
+        {
+            .name = "hello2",
+            .signature="()V",
+            .fnPtr = reinterpret_cast<void *>(&mainabc)
+        },
+        {
+            .name = "hotfix",
+            .signature ="(Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;)V",
+            .fnPtr = reinterpret_cast<void *>(&hotfix)
         }
     };
-    env->RegisterNatives(env->FindClass("io/github/stefanji/playground/TestJNIRegiester"), methods,
-                         jni_util::size(methods));
+    jclass clazz = env->FindClass("io/github/stefanji/playground/JNIRegiester");
+    g_class = static_cast<jclass>(env->NewGlobalRef(clazz));
+    env->RegisterNatives(clazz, methods, jni_util::size(methods));
     // 返回jni的版本
     return JNI_VERSION_1_4;
 }

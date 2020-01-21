@@ -28,21 +28,9 @@ class JsBridgeActivity : Activity() {
             javaScriptEnabled = true
         }
 
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
-                return super.onJsAlert(view, url, message, result)
-            }
-        }
+        webView.webChromeClient = object : WebChromeClient() {}
 
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                return super.shouldOverrideUrlLoading(view, url)
-            }
-
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                return super.shouldOverrideUrlLoading(view, request)
-            }
-        }
+        webView.webViewClient = object : WebViewClient() {}
         val html = """
             <html>
                 <head>

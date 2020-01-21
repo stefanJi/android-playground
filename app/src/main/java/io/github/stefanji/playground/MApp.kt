@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.squareup.leakcanary.LeakCanary
 
 
 /**
@@ -19,19 +18,26 @@ class MApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+//        enableActivityThreadLog()
         MultiDex.install(this)
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-        // Normal app init code...
-
         registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
 }
 
+private fun enableActivityThreadLog() {
+    val activityThread = Class.forName("android.app.ActivityThread")
+    val currentActivityThreadMethod = activityThread.getDeclaredMethod("currentActivityThread")
+    currentActivityThreadMethod.isAccessible = true
+    val currentActivityThread = currentActivityThreadMethod.invoke(null)
+    activityThread.declaredFields.forEach {
+        Log.d("TAG", "${it.name} ${it.type}")
+    }
+    arrayOf("DEBUG_HW_ACTIVITY", "DEBUG_HW_BROADCAST", "DEBUG_HW_PROVIDER", "DEBUG_HW_SERVICE", "IS_DEBUG_VERSION").forEach {
+        val filed = activityThread.getDeclaredField(it)
+        filed.isAccessible = true
+        filed.set(currentActivityThread, true)
+    }
+}
 
 class ActivityLife : Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity?) {

@@ -1,0 +1,47 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="92dp"
+            android:height="70dp"
+            android:viewportWidth="92"
+            android:viewportHeight="70">
+            <clip-path
+                android:name="mask"
+                android:pathData="M 0 0 L 0 0 L 0 92 L 0 92 L 0 0 Z" />
+            <path
+                android:fillAlpha="0.148"
+                android:fillType="nonZero"
+                android:pathData="M14.205,28.688l-12.44,13.008a4,4 0,0 0,0.126 5.656l37.977,36.319a4,4 0,0 0,5.593 -0.063l80.388,-80.395a4,4 0,0 0,0 -5.657l-12.728,-12.728a4,4 0,0 0,-5.657 0l-62.41,62.415a4,4 0,0 1,-5.593 0.063l-19.6,-18.745a4,4 0,0 0,-5.656 0.127z"
+                android:strokeAlpha="0.148">
+                <aapt:attr name="android:fillColor">
+                    <gradient
+                        android:endX="7.2120275"
+                        android:endY="63.91076"
+                        android:startX="86.3298"
+                        android:startY="17.181587"
+                        android:type="linear">
+                        <item
+                            android:color="#FFE6D9A9"
+                            android:offset="0" />
+                        <item
+                            android:color="#FFFF8775"
+                            android:offset="1" />
+                    </gradient>
+                </aapt:attr>
+            </path>
+        </vector>
+    </aapt:attr>
+    <target android:name="mask">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="450"
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:propertyName="pathData"
+                android:valueFrom="M 0 0 L 0 0 L 0 92 L 0 92 L 0 0 Z"
+                android:valueTo="M 0 0 L 0 0 L 0 92 L 92 92 L 92 0 Z"
+                android:valueType="pathType" />
+        </aapt:attr>
+    </target>
+</animated-vector>

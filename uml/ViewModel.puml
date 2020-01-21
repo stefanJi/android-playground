@@ -1,0 +1,24 @@
+@startuml
+==创建 ViewModelProvider==
+autonumber 1
+Activity -> ViewModelProvider: new
+ViewModelProvider -> ViewModelProvider: <init>
+ViewModelProvider -> ViewModelOwner: getViewModelStore
+ViewModelOwner -> Activity: getViewModelStore
+Activity -> ViewModelStore: new
+ViewModelStore -> ViewModelStore: <init>
+ViewModelStore --> Activity: viewModelStore
+Activity -> Activity: mViewModelStore = viewModelStore
+Activity --> ViewModelProvider: mViewModelStore
+
+==get ViewModel==
+autonumber 1
+Activity -> ViewModelProvider: get(MMode.class)
+ViewModelProvider -> Factory: create
+Factory -> MMode: call MMode's constructor
+MMode -> MMode: <init>
+MMode --> Factory: mMode
+Factory --> ViewModelProvider: mMode
+ViewModelProvider -> ViewModelStore: put
+ViewModelProvider --> Activity: mMode
+@enduml

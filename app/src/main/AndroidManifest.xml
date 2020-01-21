@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
             android:name=".MApp"
@@ -33,7 +34,6 @@
         <activity android:name=".DrawableTestActivity" />
         <activity android:name=".ListViewActivity" />
         <activity android:name=".LeakTestActivity" />
-        <activity android:name=".HotFixDexActivity" />
         <activity android:name=".EventTestActivity" />
         <activity android:name=".ViewDrawActivity" />
         <activity android:name=".transition_animation.TransitionEnterActivity" />
@@ -50,8 +50,29 @@
                 android:theme="@style/Transparent" />
         <activity android:name=".BackpresureActivity" />
         <activity android:name=".JsBridgeActivity" />
+        <activity android:name=".AnimateVectorDrawableTest" />
+        <activity android:name=".HandleOOMActivity" />
+        <activity android:name=".CheckAppForceStop" />
+        <activity android:name=".vpn.VpnActivity" />
+        <activity android:name=".alarm.AlarmActivity" />
+        <activity android:name=".ViewModelActivity" />
+        <activity android:name=".hotfix.HotFixActivity" />
 
         <service android:name=".RemoteService" />
+
+        <service
+                android:name=".vpn.VpnS"
+                android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".alarm.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
